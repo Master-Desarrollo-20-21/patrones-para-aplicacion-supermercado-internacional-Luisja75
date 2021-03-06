@@ -6,7 +6,7 @@ class Supermarket
 {
 	+ Country : country
 	+ Ticket : ticket
-	+ Spell()
+	+ Sell()
 	+ {static} main()
 }
 
@@ -16,10 +16,9 @@ Class Ticket
 	+ Body : body
 	+ Footer : footer
 	+ openTicket()
-	+ operationLineTicket()
-	+ closeTicket()
 	+ CountryOperationLine(int numberLine)
 	+ CountryOperationTicket()
+	+ closeTicket()
 }
 
 Class Header
@@ -76,11 +75,6 @@ Class Stock
     + update()
 }
 
-Class CountryOperation
-{
-	+ Ticket : ticket
-}
-
 Class CountryOperationLine
 {
 	+ int : numberLine
@@ -88,35 +82,13 @@ Class CountryOperationLine
 	+ printer()
 }
 
-Class CountryOperationLineSpain
-{
-	+ calculatePrice()
-	+ printer()
-}
-
-Class CountryOperationLineFrance
-{
-	+ calculatePrice()
-}
-
-
 Class CountryOperationTicket
 {
-}
-
-Class CountryOperationTicketSpain
-{
-	+ TotalPrice()
-	+ UpdateStock()
-}
-
-Class CountryOperationTicketFrance
-{
+	+ Ticket : ticket
 	+ discount()
 	+ TotalPrice()
 	+ UpdateStock()
 }
-
 
 enum Country
 {
@@ -131,7 +103,8 @@ Supermarket *-- Country
 Ticket *-- Header
 Ticket *-- Body
 Ticket *-- Footer
-Ticket ..> CountryOperation
+Ticket ..> CountryOperationLine
+Ticket ..> CountryOperationTicket
 
 Header *-- CountryHeader
 Body *-- "n" CountryLines
@@ -141,13 +114,6 @@ CountryLines <|-- SaleLine
 CountryLines <|-- AnnulationLine
 CountryLines <|-- RepetitionLine
 CountryLines <|-- DevolutionLine
-
-CountryOperation <|-- CountryOperationLine
-CountryOperation <|-- CountryOperationTicket
-CountryOperationLine <|-- CountryOperationLineSpain
-CountryOperationLine <|-- CountryOperationLineFrance
-CountryOperationTicket <|-- CountryOperationTicketSpain
-CountryOperationTicket <|-- CountryOperationTicketFrance
 
 CountryOperationTicket ..> Stock
 CountryOperation ..> Country
