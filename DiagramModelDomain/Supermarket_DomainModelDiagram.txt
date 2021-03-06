@@ -1,0 +1,158 @@
+@startuml
+
+title Supermarket - Model Domain Diagram
+
+class Supermarket
+{
+	+ Country : country
+	+ Ticket : ticket
+	+ Spell()
+	+ {static} main()
+}
+
+Class Ticket
+{
+	+ Header : header
+	+ Body : body
+	+ Footer : footer
+	+ openTicket()
+	+ operationLineTicket()
+	+ closeTicket()
+	+ CountryOperationLine(int numberLine)
+	+ CountryOperationTicket()
+}
+
+Class Header
+{
+    + string : nameSupermarket
+	+ date: dateOpen
+	+ CountryHeader : countryHeader
+}
+
+Class Body
+{
+	+ SaleLine : saleLine
+	+ AnnulationLine : annulationLine
+	+ RepetitionLine : repetitionLine
+    + CountryLines[] : countryLines
+}
+
+Class Footer
+{
+    + double : price
+	+ CountryFooter : countryFooter
+}
+
+Class CountryLines
+{
+    + int : numberLine
+}
+
+Class SaleLine
+{
+    + string : code
+	+ string : description	
+	+ int : unitsNumber 
+	+ double : price
+}
+
+Class AnnulationLine
+{
+    + int : numberLineAnnulation
+}
+
+Class RepetitionLine
+{
+    + int : numberLineRepetition
+}
+
+Class DevolutionLine
+{
+    + string : code
+}
+
+Class Stock
+{
+    + update()
+}
+
+Class CountryOperation
+{
+	+ Ticket : ticket
+}
+
+Class CountryOperationLine
+{
+	+ int : numberLine
+	+ calculatePrice()
+	+ printer()
+}
+
+Class CountryOperationLineSpain
+{
+	+ calculatePrice()
+	+ printer()
+}
+
+Class CountryOperationLineFrance
+{
+	+ calculatePrice()
+}
+
+
+Class CountryOperationTicket
+{
+}
+
+Class CountryOperationTicketSpain
+{
+	+ TotalPrice()
+	+ UpdateStock()
+}
+
+Class CountryOperationTicketFrance
+{
+	+ discount()
+	+ TotalPrice()
+	+ UpdateStock()
+}
+
+
+enum Country
+{
+    SPAIN
+    FRANCE
+    ...
+}
+
+Supermarket *-- Ticket
+Supermarket *-- Country
+
+Ticket *-- Header
+Ticket *-- Body
+Ticket *-- Footer
+Ticket ..> CountryOperation
+
+Header *-- CountryHeader
+Body *-- "n" CountryLines
+Footer *-- CountryFooter
+
+CountryLines <|-- SaleLine
+CountryLines <|-- AnnulationLine
+CountryLines <|-- RepetitionLine
+CountryLines <|-- DevolutionLine
+
+CountryOperation <|-- CountryOperationLine
+CountryOperation <|-- CountryOperationTicket
+CountryOperationLine <|-- CountryOperationLineSpain
+CountryOperationLine <|-- CountryOperationLineFrance
+CountryOperationTicket <|-- CountryOperationTicketSpain
+CountryOperationTicket <|-- CountryOperationTicketFrance
+
+CountryOperationTicket ..> Stock
+CountryOperation ..> Country
+CountryHeader ..> Country
+CountryLines ..> Country
+CountryFooter ..> Country
+
+@enduml
