@@ -1,0 +1,114 @@
+@startuml
+
+title Supermarket - Class Diagram (Operations - 2 of 2)
+
+
+abstract class Operation
+{
+	+ CommandOperation[] : listCommand
+	+ execute(ticket)
+	+ {abstract} setCommand()
+}
+Operation ..> CommandOperation
+
+abstract class CommandOperation
+{
+	+ Ticket : ticket
+	+ {abstract} execute()
+}
+
+abstract class CommandOperationLine
+{
+	+ Line : line
+}
+
+Class CommandOperationLineComposite
+{
+	+ execute()
+}
+
+Class CommandOperationLinePrice
+{
+	+ execute()
+}
+
+Class CommandOperationLineDisplay
+{
+	+ execute()
+}
+
+Class CommandOperationLinePrinter
+{
+	+ execute()
+}
+
+Class CommandOperationLineDiscount
+{
+	+ execute()
+}
+
+Class CommandOperationTicketComposite
+{
+	+ execute()
+}
+
+Class CommandOperationTicketDiscount
+{
+	+ execute()
+}
+
+Class CommandOperationTicketPrice
+{
+	+ execute()
+}
+
+Class CommandOperationTicketStock
+{
+	+ execute()
+}
+CommandOperation <|-- CommandOperationTicketComposite
+CommandOperation <|-- CommandOperationTicketDiscount
+CommandOperation <|-- CommandOperationTicketPrice
+CommandOperation <|-- CommandOperationTicketStock
+CommandOperation <|-- CommandOperationLine 
+CommandOperationLine <|-- CommandOperationLineComposite
+CommandOperationLine <|-- CommandOperationLinePrice
+CommandOperationLine <|-- CommandOperationLineDisplay
+CommandOperationLine <|-- CommandOperationLinePrinter
+CommandOperationLine <|-- CommandOperationLineDiscount
+
+
+Class SpainOperationLine
+{
+	+ setCommand()
+}
+
+Class FranceOperationLine
+{
+	+ setCommand()
+}
+
+Class SpainOperationTicket
+{
+	+ setCommand()
+}
+
+Class FranceOperationTicket
+{
+	+ setCommand()
+}
+Operation <|-- SpainOperationLine
+Operation <|-- FranceOperationLine
+Operation <|-- SpainOperationTicket
+Operation <|-- FranceOperationTicket
+
+Class Stock
+{
+    + update()
+	+ getPrice (id : int)
+	+ add (id : int)
+	+ remove (id : int)
+}
+CommandOperationTicketStock ..> Stock
+
+@enduml

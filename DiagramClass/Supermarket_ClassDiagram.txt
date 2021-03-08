@@ -1,0 +1,318 @@
+@startuml
+
+title Supermarket - Class Diagram (Full)
+
+class Supermarket
+{
+	+ Menu : menu
+	+ Ticket : ticket
+	+ Sell()
+	+ {static} main()
+}
+Supermarket *-- Ticket
+Supermarket *-- Menu
+Supermarket ..> Stock
+
+Class Stock
+{
+    + update()
+	+ getPrice (id : int)
+	+ add (id : int)
+	+ remove (id : int)
+}
+
+Class Ticket
+{
+	+ Header : header
+	+ Line[] : lines
+	+ Footer : footer
+	+ OperationLine : listOperationLine
+	+ OperationTicket[] : listOperationTicket
+	+ open()
+	+ addLine()
+	+ close()	
+}
+Ticket *-- Header
+Ticket *-- Line
+Ticket *-- Footer
+
+
+abstract Class TicketBuilder
+{
+	+ {static} instance() : TicketBuiklder
+	+ {abstract} Built () : Ticket
+}
+TicketBuilder ..> Ticket
+
+
+abstract Class Header
+{
+    + string : nameSupermarket
+	+ date : dateOpen
+}
+
+abstract Class Footer
+{
+	+ double : price
+}
+
+abstract Class Line
+{
+	+ int id
+}
+
+abstract Class LineCode
+{
+	+ string code
+}
+
+abstract Class LineNumber
+{
+	+ int : numLine
+}
+Class LineSale
+{
+	+ string : description	
+	+ int : unitsNumber 
+	+ double : price
+}
+
+Class LineDevolution
+{
+}
+
+Class LineRepetition
+{
+}
+
+Class LineAnnulation
+{
+}
+
+Line <|-- LineCode
+Line <|-- LineNumber
+LineCode <|-- LineSale
+LineCode <|-- LineDevolution
+LineNumber <|-- LineAnnulation
+LineNumber <|-- LineRepetition
+
+
+abstract class CountryFactory
+{
+	+ {abstract} createMenu()
+	+ {abstract} createTicket()
+	+ {abstract} createOperationsLine()
+	+ {abstract} createOperationsTicket()
+}
+CountryFactory ..> Ticket
+CountryFactory ..> Menu
+CountryFactory ..> Operation
+
+abstract class Menu
+{
+	+ CommandMenu[] : listCommand
+	+ execute(ticket)
+	+ {abstract} setCommand()
+}
+Menu ..> CommandMenu
+
+abstract class CommandMenu
+{
+	+ string : title
+	+ Ticket : ticket
+	+ {abstract} execute()
+}
+
+Class MenuLineSale
+{
+	+ execute()
+}
+
+Class MenuLineRepetition
+{
+	+ execute()
+}
+
+Class MenuLineAnnulation
+{
+	+ execute()
+}
+
+Class MenuLineDevolution
+{
+	+ execute()
+}
+CommandMenu <|-- MenuLineSale
+CommandMenu <|-- MenuLineRepetition
+CommandMenu <|-- MenuLineAnnulation
+CommandMenu <|-- MenuLineDevolution
+
+
+class SpainFactory
+{
+	+ createMenu()
+	+ createTicket()
+	+ createOperationsLine()
+	+ createOperationsTicket()
+}
+
+class FranceFactory
+{
+	+ createMenu()
+	+ createTicket()
+	+ createOperationsLine()
+	+ createOperationsTicket()
+}
+
+Class SpainMenu
+{
+	+ setCommand()
+}
+
+Class FranceMenu
+{
+	+ setCommand()
+}
+
+class SpainTicketBuilder
+{
+	+ Build() : Ticket
+}
+
+class FranceTicketBuilder
+{
+	+ Build() : Ticket
+}
+
+Class SpainHeader
+{
+	+ string : addSpain
+}
+
+Class FranceHeader
+{
+	+ string : addFrance
+}
+
+Class SpainFooter
+{
+	+ string : addSpain
+}
+
+Class FranceFooter
+{
+	+ string : addFrance
+}
+CountryFactory <|-- SpainFactory
+CountryFactory <|-- FranceFactory
+Menu <|-- SpainMenu
+Menu <|-- FranceMenu
+TicketBuilder <|-- SpainTicketBuilder
+TicketBuilder <|-- FranceTicketBuilder
+Header <|-- SpainHeader
+Header <|-- FranceHeader
+Footer <|-- SpainFooter
+Footer <|-- FranceFooter
+
+abstract class Operation
+{
+	+ CommandOperation[] : listCommand
+	+ execute(ticket)
+	+ {abstract} setCommand()
+}
+
+@startuml
+
+title Supermarket - Class Diagram (Operations)
+
+
+abstract class Operation
+{
+	+ CommandOperation[] : listCommand
+	+ execute(ticket)
+	+ {abstract} setCommand()
+}
+Operation ..> CommandOperation
+
+abstract class CommandOperation
+{
+	+ Ticket : ticket
+	+ {abstract} execute()
+}
+
+abstract class CommandOperationLine
+{
+	+ Line : line
+}
+
+Class CommandOperationLinePrice
+{
+	+ execute()
+}
+
+Class CommandOperationLineDisplay
+{
+	+ execute()
+}
+
+Class CommandOperationLinePrinter
+{
+	+ execute()
+}
+
+Class CommandOperationLineDiscount
+{
+	+ execute()
+}
+
+Class CommandOperationTicketDiscount
+{
+	+ execute()
+}
+
+Class CommandOperationTicketPrice
+{
+	+ execute()
+}
+
+Class CommandOperationTicketStock
+{
+	+ execute()
+}
+CommandOperation <|-- CommandOperationTicketDiscount
+CommandOperation <|-- CommandOperationTicketPrice
+CommandOperation <|-- CommandOperationTicketStock
+CommandOperation <|-- CommandOperationLine 
+CommandOperationLine <|-- CommandOperationLinePrice
+CommandOperationLine <|-- CommandOperationLineDisplay
+CommandOperationLine <|-- CommandOperationLinePrinter
+CommandOperationLine <|-- CommandOperationLineDiscount
+
+
+Class SpainOperationLine
+{
+	+ setCommand()
+}
+
+Class FranceOperationLine
+{
+	+ setCommand()
+}
+
+Class SpainOperationTicket
+{
+	+ setCommand()
+}
+
+Class FranceOperationTicket
+{
+	+ setCommand()
+}
+Operation <|-- SpainOperationLine
+Operation <|-- FranceOperationLine
+Operation <|-- SpainOperationTicket
+Operation <|-- FranceOperationTicket
+
+CommandOperationTicketStock ..> Stock
+
+@enduml

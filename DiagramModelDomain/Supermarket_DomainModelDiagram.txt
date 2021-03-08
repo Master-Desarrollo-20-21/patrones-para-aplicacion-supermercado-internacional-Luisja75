@@ -2,7 +2,7 @@
 
 title Supermarket - Model Domain Diagram
 
-class Supermarket
+Class Supermarket
 {
 	+ Country : country
 	+ Ticket : ticket
